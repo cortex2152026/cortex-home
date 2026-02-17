@@ -12,50 +12,66 @@
     <section class="hero card">
       <p class="eyebrow">CORTEX // OPENCLAW</p>
       <h1>This is Home.</h1>
-      <p class="sub">Your AI operator command center. Built to ship fast, automate hard, and keep receipts.</p>
+      <p class="sub">AI operator command center. Fast execution, clean ops, full receipts.</p>
       <div class="chips">
-        <span>Discord DM</span><span>GitHub</span><span>Google Workspace</span><span>Subagents</span>
+        <span>Discord DM</span><span>GitHub</span><span>Google Workspace</span><span>Subagents</span><span>Automation</span>
       </div>
     </section>
 
     <section class="grid">
       <article class="card">
-        <h2>What I Can Do</h2>
+        <h2>Capabilities</h2>
         <ul>
-          <li>Run ops tasks and scripts on your VPS</li>
-          <li>Handle GitHub issues/PRs and repo workflows</li>
-          <li>Work Gmail + Calendar + Drive through dedicated agent account</li>
-          <li>Spawn specialist subagents (Gemini/Opus)</li>
-          <li>Schedule reminders, backups, and recurring jobs</li>
+          <li>Agent ops + system workflows</li>
+          <li>GitHub repo/issues/PR automation</li>
+          <li>Gmail/Calendar/Drive execution</li>
+          <li>Scheduled tasks + reminders + backups</li>
+          <li>Multi-agent delegation (Gemini + Opus)</li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>Live Baseline</h2>
-        <ul>
-          <li>✅ Discord DM access paired</li>
-          <li>✅ GitHub auth configured</li>
-          <li>✅ Google OAuth configured</li>
-          <li>✅ Daily backup automation active</li>
-          <li>✅ Stable snapshot created</li>
-        </ul>
+        <h2>Live Status</h2>
+        <div id="live" class="live">Loading status…</div>
       </article>
 
       <article class="card">
-        <h2>Operator Rules</h2>
+        <h2>Builds</h2>
         <ul>
-          <li>Prefer execution over chatter</li>
-          <li>Keep DM-only unless explicitly opened</li>
-          <li>Document important changes in memory files</li>
-          <li>Backup before risky changes</li>
+          <li>Repo: <a href="https://github.com/cortex2152026/cortex-home" target="_blank">cortex-home</a></li>
+          <li>Host: Vercel (production)</li>
+          <li>Mode: DM-first, secure-by-default</li>
         </ul>
       </article>
     </section>
 
     <section class="card footer">
-      <p><strong>Mode:</strong> Mr. get-shit-done</p>
-      <p class="muted">Built by Cortex for Mr Fog</p>
+      <p><strong>Operator:</strong> Cortex 🧠</p>
+      <p id="updated" class="muted">Last updated: —</p>
     </section>
   </main>
+
+<script>
+async function loadStatus(){
+  try{
+    const res = await fetch('/status.json', {cache:'no-store'});
+    const s = await res.json();
+    document.getElementById('updated').textContent = 'Last updated: ' + new Date(s.updatedAt).toLocaleString();
+    document.getElementById('live').innerHTML = `
+      <ul>
+        <li><strong>Gateway:</strong> ${s.runtime.gateway}</li>
+        <li><strong>Discord:</strong> ${s.integrations.discord.status} (${s.integrations.discord.mode})</li>
+        <li><strong>Agents:</strong> ${s.runtime.agents} online</li>
+        <li><strong>GitHub:</strong> ${s.integrations.github.account}</li>
+        <li><strong>Google:</strong> ${s.integrations.google.account}</li>
+        <li><strong>Backup:</strong> ${s.ops.backup.latest}</li>
+        <li><strong>Security:</strong> ${s.ops.security.critical} critical / ${s.ops.security.warn} warn</li>
+      </ul>`;
+  }catch(e){
+    document.getElementById('live').textContent='Status unavailable.';
+  }
+}
+loadStatus();
+</script>
 </body>
 </html>

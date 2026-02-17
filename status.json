@@ -1,0 +1,48 @@
+{
+  "updatedAt": "2026-02-17T03:12:46.793425+00:00",
+  "runtime": {
+    "gateway": "running",
+    "discord": "connected",
+    "agents": 3,
+    "bootstrapPending": 0
+  },
+  "models": {
+    "main": "openai-codex/gpt-5.3-codex",
+    "specialists": [
+      "google/gemini-3-pro-preview",
+      "anthropic/claude-opus-4-6"
+    ]
+  },
+  "integrations": {
+    "github": {
+      "status": "ok",
+      "account": "cortex2152026"
+    },
+    "google": {
+      "status": "ok",
+      "account": "cortex2152026@gmail.com",
+      "services": [
+        "calendar",
+        "contacts",
+        "drive",
+        "gmail"
+      ]
+    },
+    "discord": {
+      "status": "ok",
+      "mode": "dm-only"
+    }
+  },
+  "ops": {
+    "backup": {
+      "latest": "openclaw-STABLE.tgz",
+      "path": "/home/ubuntu/.openclaw/backups/openclaw-STABLE.tgz",
+      "schedule": "Daily 04:00 America/Chicago"
+    },
+    "security": {
+      "critical": 0,
+      "warn": 1,
+      "info": 1
+    }
+  }
+}
