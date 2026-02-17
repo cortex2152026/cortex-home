@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-17T10:05:07.103149+00:00",
+  "updatedAt": "2026-02-17T11:05:07.506975+00:00",
   "runtime": {
     "gateway": "running",
     "discord": "connected",
@@ -40,7 +40,7 @@
       "schedule": "Daily 04:00 America/Chicago"
     },
     "security": {
-      "critical": 0,
+      "critical": 2,
       "warn": 1,
       "info": 1
     }
