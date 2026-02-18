@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cortex Home</title>
-  <meta name="description" content="Cortex Home — Meet Cortex and Mr Fog" />
+  <meta name="description" content="Cortex Home — Mr Fog + Cortex (DM → PR → shipped)" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -12,10 +12,10 @@
     <section class="hero card">
       <p class="eyebrow">WELCOME TO CORTEX HOME</p>
       <h1>Meet Cortex 🧠 + Mr Fog</h1>
-      <p class="sub">We’re building an AI-native operator stack in public: one human, one relentless AI lead-dev operator, zero fluff.</p>
-      <p class="sub"><strong>Start here:</strong> <a href="/learn">Learn how to use Cortex →</a></p>
+      <p class="sub">We’re building an AI-native operator stack in public: one human, one relentless AI operator, minimal ceremony.</p>
+      <p class="sub"><strong>Start here:</strong> <a href="/learn">Learn the workflow →</a></p>
       <div class="chips">
-        <span>Discord DM-first</span><span>GitHub-native</span><span>Ops + shipping</span><span>Always shipping</span>
+        <span>Discord DM-first</span><span>PR autopilot</span><span>I run tests</span><span>You approve</span>
       </div>
     </section>
 
@@ -23,9 +23,9 @@
       <article class="card">
         <h2>Who We Are</h2>
         <ul>
-          <li><strong>Mr Fog:</strong> builder, owner, and decision-maker.</li>
-          <li><strong>Cortex:</strong> AI lead dev inside OpenClaw (direct, systematic, shippable).</li>
-          <li><strong>Mode:</strong> single-operator (no subagent delegation).</li>
+          <li><strong>Mr Fog:</strong> builder, owner, decision-maker.</li>
+          <li><strong>Cortex:</strong> AI operator inside OpenClaw (ships PRs, runs tests, reports back).</li>
+          <li><strong>Mode:</strong> I propose 2 options → you pick (<code>go 1</code>/<code>go 2</code>) → I execute.</li>
         </ul>
       </article>
 
@@ -37,8 +37,8 @@
       <article class="card">
         <h2>What We’re Building</h2>
         <ul>
-          <li>Autonomous ops loops (status, backups, summaries)</li>
-          <li>Tooling that turns chat into execution</li>
+          <li>DM → code → PR → shipped loops</li>
+          <li>Automation that reduces tool sprawl (no n8n required)</li>
           <li>A public blueprint for practical AI operators</li>
         </ul>
       </article>
@@ -48,16 +48,16 @@
       <h2>Quick Tour</h2>
       <div class="tour-grid">
         <div>
-          <h3>1) Talk to Cortex</h3>
-          <p>Use your configured channel (Discord DM, webchat, etc.) and ask for a task. Cortex plans, executes, and reports.</p>
+          <h3>1) Drop a goal</h3>
+          <p>Tell Cortex what you want. Messy is fine.</p>
         </div>
         <div>
-          <h3>2) Execute</h3>
-          <p>Cortex uses tools directly (no Iris/Slate subagent workflow).</p>
+          <h3>2) Pick an option</h3>
+          <p>Cortex replies with 2 options + a recommendation. You reply <code>go 1</code> or <code>go 2</code>.</p>
         </div>
         <div>
-          <h3>3) Verify</h3>
-          <p>Every major state is tracked: backups, repo history, and integration health.</p>
+          <h3>3) PR autopilot</h3>
+          <p>Cortex implements on a branch, runs tests, pushes, and opens a PR. You just approve/deny.</p>
         </div>
       </div>
     </section>
@@ -66,8 +66,8 @@
       <h2>Follow the Build</h2>
       <ul>
         <li>GitHub: <a href="https://github.com/cortex2152026/cortex-home" target="_blank">cortex-home</a></li>
-        <li>Deployment: Vercel (auto-updated production)</li>
-        <li>Operating style: "get shit done"</li>
+        <li>Deployment: Vercel</li>
+        <li>Operating style: “get shit done” + “vibe coder” friendly</li>
       </ul>
     </section>
 
@@ -82,16 +82,23 @@ async function loadStatus(){
   try{
     const res = await fetch('/status.json', {cache:'no-store'});
     const s = await res.json();
+
     document.getElementById('updated').textContent = 'Last updated: ' + new Date(s.updatedAt).toLocaleString();
+
+    const integrations = s.integrations || {};
+    const ops = s.ops || {};
+    const security = (ops.security || {});
+
     document.getElementById('live').innerHTML = `
       <ul>
-        <li><strong>Gateway:</strong> ${s.runtime.gateway}</li>
-        <li><strong>Discord:</strong> ${s.integrations.discord.status} (${s.integrations.discord.mode})</li>
-        <li><strong>Agents:</strong> ${s.runtime.agents} online</li>
-        <li><strong>GitHub:</strong> ${s.integrations.github.account}</li>
-        <li><strong>Google:</strong> ${s.integrations.google.account}</li>
-        <li><strong>Backup:</strong> ${s.ops.backup.latest}</li>
-        <li><strong>Security:</strong> ${s.ops.security.critical} critical / ${s.ops.security.warn} warn</li>
+        <li><strong>Gateway:</strong> ${s.runtime?.gateway ?? 'unknown'}</li>
+        <li><strong>Discord:</strong> ${integrations.discord?.status ?? 'unknown'}${integrations.discord?.mode ? ` (${integrations.discord.mode})` : ''}</li>
+        <li><strong>Agents:</strong> ${s.runtime?.agents ?? 'unknown'}</li>
+        <li><strong>Model:</strong> ${s.models?.main ?? 'unknown'}</li>
+        <li><strong>GitHub:</strong> ${integrations.github?.account ?? 'unknown'}</li>
+        <li><strong>Google:</strong> ${integrations.google?.account ?? 'unknown'}</li>
+        <li><strong>Backup:</strong> ${ops.backup?.latest ?? 'unknown'}</li>
+        <li><strong>Security:</strong> ${security.critical ?? 0} critical / ${security.warn ?? 0} warn</li>
       </ul>`;
   }catch(e){
     document.getElementById('live').textContent='Status unavailable.';
