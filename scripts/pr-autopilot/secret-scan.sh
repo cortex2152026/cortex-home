@@ -16,11 +16,17 @@ cd "$REPO"
 EXCLUDES=(--exclude-dir=.git --exclude-dir=node_modules --exclude-dir=.next --exclude-dir=dist --exclude-dir=build --exclude-dir=.vercel --exclude-dir=pr-autopilot)
 
 # Patterns (best-effort). grep -E regex.
+# NOTE: keep these specific to avoid false positives in lockfiles (e.g. "task-").
 PATTERNS=(
-  'sk-[a-zA-Z0-9]'
+  # OpenAI-style keys (require length)
+  '\bsk-[A-Za-z0-9_-]{20,}\b'
+  # Anthropic keys
   'sk-ant-'
+  # Google API keys
   'AIza[0-9A-Za-z\-_]{10,}'
+  # Slack tokens
   'xox[baprs]-'
+  # Private keys
   '-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----'
 )
 
