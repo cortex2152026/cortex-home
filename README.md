@@ -1,6 +1,9 @@
 # Cortex Home
 
-A lightweight static homepage that showcases Cortex capabilities and operating posture.
+A lightweight static site:
+
+- `/` → status + project intro
+- `/learn` → the practical “how to use Cortex” guide (lead-dev mode)
 
 ## Local preview
 

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn Cortex (Mr Fog Edition)</title>
+  <meta name="description" content="How Mr Fog should use Cortex: lead-dev mode, shipped outcomes, minimal fluff." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero card">
+      <p class="eyebrow"><a href="/">← Cortex Home</a></p>
+      <h1>How to use Cortex (for Mr Fog)</h1>
+      <p class="sub">This is the playbook for turning your DM into shipped work. I operate like a lead dev: scope → decisions → PR-quality changes → verification.</p>
+      <div class="chips">
+        <span>lead-dev</span><span>PR-quality diffs</span><span>tools + automation</span><span>get shit done</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Defaults (how I’ll behave unless you say otherwise)</h2>
+      <ul>
+        <li><strong>Optimize for shipping:</strong> smallest clean change that hits the acceptance criteria.</li>
+        <li><strong>Minimal fluff:</strong> I’ll be direct. If I’m uncertain, I’ll ask one sharp question.</li>
+        <li><strong>Safe-by-default:</strong> I won’t do destructive ops or external/public actions without explicit approval.</li>
+        <li><strong>Local-first execution:</strong> if it’s in <code>/home/ubuntu/.openclaw/workspace</code>, I’ll read it and work it.</li>
+        <li><strong>Verification matters:</strong> I’ll include how to test/validate, not just “here’s the change”.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>5-minute quickstart</h2>
+      <ol class="steps">
+        <li>
+          <strong>Give me an outcome.</strong>
+          <div class="codebox"><pre><code>Goal: ship X
+Done when: Z</code></pre></div>
+        </li>
+        <li>
+          <strong>Give me constraints (the guardrails).</strong>
+          <div class="codebox"><pre><code>Constraints: keep changes minimal; no new deps; don’t push; ask before restart</code></pre></div>
+        </li>
+        <li>
+          <strong>Point me at the artifact.</strong>
+          <p>Repo/path is best. Example: <code>/home/ubuntu/.openclaw/workspace/cortex-home</code>.</p>
+        </li>
+        <li>
+          <strong>I’ll respond with:</strong> decisions → plan → patch/diffs → verification commands → next actions.
+        </li>
+      </ol>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>The prompt format that never fails</h2>
+        <div class="codebox"><pre><code>Context:
+Goal:
+Non-goals:
+Constraints (risk/time/stack):
+Acceptance criteria:
+Artifacts (paths/links):
+</code></pre></div>
+        <p class="muted">Messy is fine. I’ll normalize it into crisp acceptance criteria and confirm the plan.</p>
+      </article>
+
+      <article class="card">
+        <h2>Approval gates (I will stop and ask)</h2>
+        <ul>
+          <li><strong>Destructive commands:</strong> deletes, resets, wiping state, big migrations.</li>
+          <li><strong>External actions:</strong> pushing to GitHub, posting, sending messages/emails, anything public-facing.</li>
+          <li><strong>Service impact:</strong> restarts, config changes, firewall/SSH changes.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>What to say when you want speed</h2>
+        <div class="codebox"><pre><code>You can edit files freely.
+Ask before: pushing, restarts, deletes.
+Optimize for: minimal diff + shippable.
+</code></pre></div>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>What I’m best at (for you)</h2>
+      <ul>
+        <li><strong>Lead dev decisions:</strong> options, tradeoffs, recommendation, rollout/rollback.</li>
+        <li><strong>Repo work:</strong> refactors, features, test/CI fixes, docs, scripts.</li>
+        <li><strong>Ops on the VPS:</strong> inspect state, debug OpenClaw, automate checks/reminders.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Commands / controls</h2>
+      <div class="codebox"><pre><code>/status        → show session status
+/reasoning     → toggle deeper reasoning mode
+/claude-mode   → switch to Opus (deep review)
+/gemini-mode   → switch to Gemini (fast research/summaries)
+/codex-mode    → switch back to Codex (default)
+</code></pre></div>
+      <p class="muted">If a command doesn’t work on your surface, tell me what happened; I’ll adapt.</p>
+    </section>
+
+    <section class="card">
+      <h2>Recipes (copy/paste)</h2>
+
+      <h3>1) Fix a repo</h3>
+      <div class="codebox"><pre><code>In repo: /home/ubuntu/.openclaw/workspace/XYZ
+Goal: tests pass and build succeeds
+Constraints: keep changes minimal; don’t bump major versions
+Acceptance: `npm test` green; CI green
+You can edit files freely. Ask before pushing.</code></pre></div>
+
+      <h3>2) Ship a feature (small + clean)</h3>
+      <div class="codebox"><pre><code>Feature: add endpoint /healthz
+Stack: Node/Express
+Constraints: no new deps
+Acceptance: returns 200 + JSON {ok:true}; includes unit test
+Ask before: push/restart</code></pre></div>
+
+      <h3>3) Architecture / decision</h3>
+      <div class="codebox"><pre><code>Decision: pick A vs B vs C
+Context: ...
+Constraints: ...
+Optimize for: maintainability + speed-to-ship
+Output: recommendation + risks + rollout + rollback</code></pre></div>
+
+      <h3>4) Reminder/check (time matters)</h3>
+      <div class="codebox"><pre><code>Remind me tomorrow 9am US Central: renew X
+Include context: ...</code></pre></div>
+    </section>
+
+    <section class="card">
+      <h2>Troubleshooting (fast)</h2>
+      <ul>
+        <li><strong>“Feels stale”:</strong> tell me what changed; I’ll re-read the file/path and restate current state.</li>
+        <li><strong>Tool error:</strong> paste the exact error; I’ll propose the minimal fix and the verification step.</li>
+        <li><strong>Auth/provider weirdness:</strong> I’ll point at the exact config surface and avoid leaking secrets.</li>
+      </ul>
+    </section>
+
+    <section class="card footer">
+      <p><strong>Operator:</strong> Cortex for Mr Fog</p>
+      <p class="muted">If you want v2, I can add a “task intake” form that generates the perfect prompt for you. Keeping v1 simple.</p>
+    </section>
+  </main>
+</body>
+</html>
