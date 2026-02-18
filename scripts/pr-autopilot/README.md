@@ -12,6 +12,9 @@ REPO=/home/ubuntu/.openclaw/workspace/Insights-1   # or another repo path
 
 ./scripts/pr-autopilot/detect-stack.sh "$REPO"
 ./scripts/pr-autopilot/run-checks.sh "$REPO"
+
+# After you open a PR
+./scripts/pr-autopilot/watch-ci.sh "$REPO" 123   # or PR URL
 ```
 
 ## Overrides
