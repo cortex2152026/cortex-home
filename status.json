@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-18T02:05:49.004648+00:00",
+  "updatedAt": "2026-02-18T03:05:11.391118+00:00",
   "runtime": {
     "gateway": "running",
     "agents": 2
@@ -7,7 +7,7 @@
   "models": {
     "main": "openai-codex/gpt-5.2",
     "specialists": [
-      "anthropic/claude-3-5-sonnet-latest"
+      "anthropic/claude-opus-4-6"
     ]
   },
   "integrations": {
@@ -36,7 +36,7 @@
       "path": "/home/ubuntu/.openclaw/backups/openclaw-STABLE.tgz"
     },
     "security": {
-      "critical": 2,
+      "critical": 1,
       "warn": 2,
       "info": 1
     }
